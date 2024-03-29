@@ -21,12 +21,12 @@ const transporter = nodemailer.createTransport({
 
 // Endpoint to send email
 app.post('/send-email', (req, res) => {
-    const { to, subject, text } = req.body;
+    const { from, subject, text } = req.body;
 
     // Email message options
     const mailOptions = {
-        from: 'pcuser0x0@gmail.com',  // Sender email address
-        to: to,                         // Recipient email address
+        from: from,  // Sender email address
+        to: "pcuser0x0@gmail.com",                         // Recipient email address
         subject: subject,               // Subject line
         text: text                      // Plain text body
     };
