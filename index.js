@@ -10,12 +10,14 @@ console.log(port)
 // Middleware to parse incoming request bodies
 app.use(bodyParser.json());
 
+const email=process.env.EMAIL;
+console.log(email)
 // Create a transporter object using SMTP transport
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'pcuser0x0@gmail.com',  // Your Gmail email address
-        pass: 'xoucbbmlmulycmkk'           // Your Gmail password or App-Specific Password
+        user: email,  // Your Gmail email address
+        pass: process.env.PASSWROD           // Your Gmail password or App-Specific Password
     }
 });
 
@@ -25,10 +27,10 @@ app.post('/send-email', (req, res) => {
 
     // Email message options
     const mailOptions = {
-        from: from,  // Sender email address
-        to: "pcuser0x0@gmail.com",                         // Recipient email address
+        from: email,  // Sender email address
+        to: email,                         // Recipient email address
         subject: subject,               // Subject line
-        text: text                      // Plain text body
+        text: `User Email: ${from}\nDescription: ${text}`                      // Plain text body
     };
 
     // Send email
