@@ -1,9 +1,22 @@
+const rateLimit = require("express-rate-limit")
 const express = require('express');
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
 require("dotenv").config();
 const cors = require('cors');
 const app = express();
+
+
+const limiter = rateLimit({
+	windowMs: 5 * 60 * 60 * 1000, // 15 minutes
+	limit: 5, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+	standardHeaders: 'draft-7', // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
+	// store: ... , // Redis, Memcached, etc. See below.
+})
+
+
+app.use(limiter);
 app.use(cors());
 const port = process.env.PORT||8080;
 console.log(port)
